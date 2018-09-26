@@ -11,17 +11,24 @@ library(tidyverse)
 library(knitr)
 ```
 
-
+##Course Enrollment Data
 ```{r, echo=FALSE}
 x <- read_rds("enrollment.rds") %>% 
   select(course_department, course_title, course_name, u_grad) %>% 
   arrange(desc(u_grad)) %>% 
-  filter(!is.na(course_name)) %>% 
-  head(10)
+  filter(!is.na(course_name)) 
 
-x %>% 
+y <-x %>% 
+  mutate(c_length = nchar(course_name)) %>% 
+  select(course_department, course_title, course_name, c_length, u_grad) %>% 
+  arrange(c_length) %>% 
+  slice(1:7)
+
+y %>% 
   kable(caption= "Enrollments")
 ```
+
+
 
 
 
